@@ -98,12 +98,12 @@ class SimpleBacktester:
         else:
             self.sharpe_ratio_per_period = np.nan
 
-        gross_profit = exits_df.filter(pl.col('realized_pnl') > 0).select(pl.col('realized_pnl').sum()).item()
+        gross_profit = exits_df.filter(pl.col('realized_pnl') > 0).select(pl.col('realized_pnl').sum()).item() or 0.0
         gross_loss = abs(exits_df.filter(pl.col('realized_pnl') < 0).select(pl.col('realized_pnl').sum()).item() or 0.0)
 
         if gross_loss > 0:
             self.profit_factor = float(gross_profit / gross_loss)
-        elif gross_profit > 0:
+        elif gross_profit > 0 and gross_loss == 0:
             self.profit_factor = np.inf
         else:
             self.profit_factor = np.nan
@@ -118,5 +118,5 @@ class SimpleBacktester:
             'sharpe_per_period': None if np.isnan(self.sharpe_ratio_per_period) else round(self.sharpe_ratio_per_period, 4),
             'profit_factor': None if np.isnan(self.profit_factor) else round(self.profit_factor, 4),
             'closed_trades': int(self.trades.filter(pl.col('type') == 'exit').height),
-        }).transpose(include_header=True, header_name="col_names")
+        }).transpose(include_header=True, header_name="col_names").rename({"col_names": "Metrics", "column_0": "Value"})
 
