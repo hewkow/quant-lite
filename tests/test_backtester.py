@@ -2,6 +2,26 @@ from backtester import SimpleBacktester
 import numpy as np
 import pytest
 
+def test_close_length():
+    """Close should have same length as entries and exits"""
+    close = np.array([100.0, 100.0, 100.0, 100.0, 100.0])
+    entries = np.array([False, True, False, False, False])
+    exits = np.array([False, False, True, False, False])
+
+    bt = SimpleBacktester(
+        close=close,
+        entries=entries,
+        exits=exits,
+        fees=0.001,
+        slippage=0.001,
+        size_usd=1000,
+        init_cash=10000,
+    )
+
+    assert len(bt.close) == len(entries) == len(exits), "Close should have same length as entries and exits"
+
+    print("PASSED: close length")
+
 
 def test_round_trip_same_price():
     """
