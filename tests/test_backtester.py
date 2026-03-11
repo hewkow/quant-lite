@@ -58,7 +58,7 @@ def test_round_trip_same_price():
 
     expected_final_cash = 9996.004995
 
-    assert bt.cash == pytest.approx(expected_final_cash, abs=0.01)
+    assert bt.cash_list[-1] == pytest.approx(expected_final_cash, abs=0.01)
     assert not bt.hold_pos , "Should not be holding after exit"
     assert bt.pos_size == 0, "Position size should be 0 after exit"
     assert len(bt.trades) == 2, f"Should have 2 trades, got {len(bt.trades)}"
@@ -101,7 +101,7 @@ def test_not_enough_cash():
         init_cash=500.0,  # not enough
     )
 
-    assert bt.cash == 500.0
+    assert bt.cash_list[-1] == 500.0
     assert not bt.hold_pos
     assert len(bt.trades) == 0
 
@@ -127,7 +127,7 @@ def test_profitable_trade():
     # sell 10 shares we should expect 10*120 = 1200 usd
     # profit = 200 usd
     # final cash = 10000 + 200 = 10200
-    assert bt.cash == 10200, "Should have correct profit"
+    assert bt.cash_list[-1] == 10200, "Should have correct profit"
     assert not bt.hold_pos, "Should not be holding after exit"
     assert len(bt.trades) == 2, f"Should have 2 trades, got {len(bt.trades)}"
 
@@ -152,7 +152,7 @@ def test_losing_trade():
     # buy 1000usd of 100 usd stock price = 10 shares
     # sell 10 shares of 80 usd = 800 usd
     # equity should be 9000 + 800 = 9800
-    assert bt.cash == 9800, "Should have correct loss"
+    assert bt.cash_list[-1] == 9800, "Should have correct loss"
     assert not bt.hold_pos, "Should not be holding after exit"
     assert len(bt.trades) == 2, f"Should have 2 trades, got {len(bt.trades)}"
 
@@ -220,7 +220,7 @@ def test_multiple_trades():
     # First round equity 105 usd* 10 share = 9000 + 1050 = 10050
     # Second round equity 115 usd* 9.0909090909 share = (10050 - 1000) + 1,045.4545454535 = 10,095.4545454535
     # Thrid round equity 130 usd* 8 share = (10095.4545454535 - 1000) + 1,040 = 10,135.4545454535
-    assert bt.cash == pytest.approx(10_135.4545454535, abs=0.01)
+    assert bt.cash_list[-1] == pytest.approx(10_135.4545454535, abs=0.01)
     assert not bt.hold_pos, "Should not be holding after exit"
     assert len(bt.trades) == 6, f"Should have 6 trades, got {len(bt.trades)}"
 
