@@ -181,7 +181,20 @@ pytest tests/test_backtester.py -v
 ## Why Polars?
 
 Polars is used for fast and convenient trade-log handling and summary formatting.
-The core backtest loop itself is NumPy-based.
+The core backtest loop itself is Numba-based. 
+And honestly for the love of rust personally.
+
+## Performance
+
+The backtest engine was refactored from a pure Python loop to a Numba-compiled loop.
+Benchmarking on identical precomputed inputs showed large speedups after JIT warm-up.
+
+- 10,000 bars: ~100x faster
+- 1,000,000 bars: ~44x faster
+- 30,000,000 bars: ~52x faster
+
+First-call timings include Numba compliation overhead and are not representative of repeated runs.
+See `benchmarks/README.md` for benchmark methodology and raw results.
 
 ## Project Status
 
