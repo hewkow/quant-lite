@@ -234,7 +234,7 @@ def _(SimpleBacktester):
 def _(bt):
     import plotly.graph_objects as go
     fig_eq = go.Figure()
-    fig_eq.add_trace(go.Scatter(y=bt.equity_list,mode='lines',name='Nigga'))
+    fig_eq.add_trace(go.Scatter(y=bt.equity_list,mode='lines',name='Equity'))
     fig_eq.add_trace(go.Scatter(y=bt.cash_list,mode='lines',name='Hold cash'))
     fig_eq.add_trace(go.Scatter(y=bt.asset_list,mode='lines',name='Hold asset'))
     fig_eq.show()
@@ -251,7 +251,7 @@ def _(go, np):
     daily_returns = np.random.normal((mu - 0.5 * sigma ** 2) * dt, sigma * np.sqrt(dt), size=days)
     price_path = s0 * np.exp(np.cumsum(daily_returns))
     fig_eq_1 = go.Figure()
-    fig_eq_1.add_trace(go.Scatter(y=price_path, mode='lines', name='Nigga'))
+    fig_eq_1.add_trace(go.Scatter(y=price_path, mode='lines', name='Close'))
     fig_eq_1.show()
     return
 
