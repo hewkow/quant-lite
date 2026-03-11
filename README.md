@@ -194,7 +194,7 @@ Benchmarking on identical precomputed inputs showed large speedups after JIT war
 - 30,000,000 bars: ~52x faster
 
 First-call timings include Numba compliation overhead and are not representative of repeated runs.
-See `benchmarks/README.md` for benchmark methodology and raw results.
+See [benchmarks/README.md](benchmarks/README.md) for benchmark methodology and raw results.
 
 ## Project Status
 
