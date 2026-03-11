@@ -220,5 +220,5 @@ Planned improvements:
 - short-selling support
 - cleaner package structure
 
-# Example equity curve generated from the notebook workflow using `bt.equity_list`.
+## Example equity curve generated from the notebook workflow using `bt.equity_list`.
 ![](images/equity.png)
